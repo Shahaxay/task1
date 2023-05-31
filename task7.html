@@ -13,13 +13,15 @@
         <label for="email">Email Id:</label><br>
         <input type="email" id="email"><br>
         <label for="phone">Phone:</label><br>
-        <input type="tel" id="phone">
+        <input type="tel" id="phone"><br>
         <input type="submit" value="submit"><br>
         <ul id="dest"></ul>
     </form>
     <script>
         var form=document.getElementById("detail");
         form.addEventListener("submit",store);
+        var dest=document.getElementById("dest");
+        dest.addEventListener("click",deleteItems);
         function store(e){
             e.preventDefault();
             var user={
@@ -29,10 +31,30 @@
             };
             localStorage.setItem(user.email,JSON.stringify(user));
             var obj=JSON.parse(localStorage.getItem(user.email));
+            //forming text to show in output
             var text=obj.name+" - "+obj.email+" - "+obj.phone;
+            //creating li element
             var newEle=document.createElement("li");
             newEle.appendChild(document.createTextNode(text));
-            document.getElementById("dest").appendChild(newEle);
+            //creating delete button 
+            var newEle1=document.createElement("button");
+            //adding classname to detect the respective details
+            newEle1.className="delete";
+            //assigning data-email custom attribute to hold the value of email which acts as key for removing the items while clicking on delete
+            newEle1.setAttribute("data-email",user.email);
+            newEle1.appendChild(document.createTextNode("delete"));
+            newEle.appendChild(newEle1);
+            dest.appendChild(newEle);
+            console.log(newEle.firstChild);
+        }
+        //deleting items from local storage as well as from destination
+        function deleteItems(e){
+            e.preventDefault();
+            if(e.target.classList.contains("delete")){
+                var key=e.target.dataset.email;
+                localStorage.removeItem(key);
+                e.target.parentElement.remove();
+            }
         }
     </script>
 </body>
