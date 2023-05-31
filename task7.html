@@ -8,11 +8,14 @@
 </head>
 <body>
     <form id="detail">
-        <label for="username">Username:</label><br>
-        <input type="text" id="username">
-        <label for="email">Email:</label>
-        <input type="email" id="email">
-        <input type="submit" value="submit">
+        <label for="name">Name:</label><br>
+        <input type="text" id="name"><br>
+        <label for="email">Email Id:</label><br>
+        <input type="email" id="email"><br>
+        <label for="phone">Phone:</label><br>
+        <input type="tel" id="phone">
+        <input type="submit" value="submit"><br>
+        <ul id="dest"></ul>
     </form>
     <script>
         var form=document.getElementById("detail");
@@ -20,13 +23,16 @@
         function store(e){
             e.preventDefault();
             var user={
-                username:document.getElementById("username").value,
-                email:document.getElementById("email").value
+                name:document.getElementById("name").value,
+                email:document.getElementById("email").value,
+                phone:document.getElementById("phone").value
             };
-            localStorage.setItem(username.value,JSON.stringify(user));
-            var obj=localStorage.getItem(username)
-            console.log(obj);
-            console.log(JSON.parse(obj));
+            localStorage.setItem(user.email,JSON.stringify(user));
+            var obj=JSON.parse(localStorage.getItem(user.email));
+            var text=obj.name+" - "+obj.email+" - "+obj.phone;
+            var newEle=document.createElement("li");
+            newEle.appendChild(document.createTextNode(text));
+            document.getElementById("dest").appendChild(newEle);
         }
     </script>
 </body>
