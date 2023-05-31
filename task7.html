@@ -44,6 +44,11 @@
             newEle1.setAttribute("data-email",user.email);
             newEle1.appendChild(document.createTextNode("delete"));
             newEle.appendChild(newEle1);
+            //creating edit button
+            var newEle2=document.createElement("button");
+            newEle2.className="edit";
+            newEle2.appendChild(document.createTextNode("Edit"));
+            newEle.append(newEle2);
             dest.appendChild(newEle);
             console.log(newEle.firstChild);
         }
@@ -54,8 +59,17 @@
                 var key=e.target.dataset.email;
                 localStorage.removeItem(key);
                 e.target.parentElement.remove();
+            }else if(e.target.classList.contains("edit")){
+                var key=e.target.previousElementSibling.dataset.email;
+                var obj=JSON.parse(localStorage.getItem(key));
+                document.getElementById("name").value=obj.name;
+                document.getElementById("email").value=obj.email;
+                document.getElementById("phone").value=obj.phone;
+                localStorage.removeItem(key);
+                e.target.parentElement.remove();
             }
         }
+        
     </script>
 </body>
 </html>
