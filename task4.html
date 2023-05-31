@@ -34,6 +34,13 @@
     listItem2.style.background="green";
     var listItem3=document.querySelector(".list-group-item:nth-child(3)");
     listItem3.style.visibility="hidden";
+    var listItems=document.querySelectorAll(".list-group-item");
+    listItems[1].style.color="green";
+    var listItems1=document.querySelectorAll(".list-group-item:nth-child(odd)");
+    for(var i in listItems1){
+        console.log(i);
+        listItems1[i].style.background="green";
+    }
   </script>
 
 </body>
