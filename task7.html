@@ -19,11 +19,14 @@
         form.addEventListener("submit",store);
         function store(e){
             e.preventDefault();
-            var username=document.getElementById("username").value;
-            var email=document.getElementById("email").value;
-            var text="username:"+username+", email:"+email;
-            localStorage.setItem(username,text);
-            console.log(localStorage.getItem(username));
+            var user={
+                username:document.getElementById("username").value,
+                email:document.getElementById("email").value
+            };
+            localStorage.setItem(username.value,JSON.stringify(user));
+            var obj=localStorage.getItem(username)
+            console.log(obj);
+            console.log(JSON.parse(obj));
         }
     </script>
 </body>
