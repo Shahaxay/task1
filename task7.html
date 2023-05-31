@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form id="detail">
+        <label for="username">Username:</label><br>
+        <input type="text" id="username">
+        <label for="email">Email:</label>
+        <input type="email" id="email">
+        <input type="submit" value="submit">
+    </form>
+    <script>
+        var form=document.getElementById("detail");
+        form.addEventListener("submit",store);
+        function store(e){
+            e.preventDefault();
+            var username=document.getElementById("username").value;
+            var email=document.getElementById("email").value;
+            var text="username:"+username+", email:"+email;
+            localStorage.setItem(username,text);
+            console.log(localStorage.getItem(username));
+        }
+    </script>
+</body>
+</html>
