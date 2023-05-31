@@ -25,6 +25,7 @@
     <h2 class="title">Add Items</h2>
     <form id="addForm" class="form-inline mb-3">
       <input type="text" class="form-control mr-2" id="item">
+      <input type="text" class="form-control mr-2" id="desc">
       <input type="submit" class="btn btn-dark" value="Submit">
     </form>
     <h2 class="title">Items</h2>
@@ -52,16 +53,25 @@ filter.addEventListener('keyup', filterItems);
 function addItem(e){
   e.preventDefault();
 
+  
   // Get input value
   var newItem = document.getElementById('item').value;
-
+  var newItem1 = document.getElementById('desc').value;
+  
   // Create new li element
   var li = document.createElement('li');
   // Add class
   li.className = 'list-group-item';
   // Add text node with input value
-  li.appendChild(document.createTextNode(newItem));
-
+  var text=newItem+" "+newItem1;
+  li.appendChild(document.createTextNode(text));
+  
+  //edit
+  var edit=document.createElement("button");
+  edit.className="btn btn-success btn-sm float-right edit";
+  edit.appendChild(document.createTextNode("Edit"));
+  li.appendChild(edit);
+  
   // Create del button element
   var deleteBtn = document.createElement('button');
 
@@ -76,6 +86,7 @@ function addItem(e){
 
   // Append li to list
   itemList.appendChild(li);
+
 }
 
 // Remove item
