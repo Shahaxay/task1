@@ -36,17 +36,17 @@
             //})
 
             //fetching data from crudcrud server
-            axios.get("https://crudcrud.com/api/ce73d61d8d1b4d629468e52f62297094/user_details")
-            .then((res)=>{
-                res.data.forEach((obj)=>{
-                    display(obj);
-                })
-            })
-            .catch((err)=>console.log(err));
+            //axios.get("https://crudcrud.com/api/ce73d61d8d1b4d629468e52f62297094/user_details")
+            //.then((res)=>{
+            //    res.data.forEach((obj)=>{
+            //        display(obj);
+            //    })
+            //})
+            //.catch((err)=>console.log(err));
         });
         function display(obj){
             //forming text to show in output
-            console.log(obj);
+            console.log(obj._id);
             var text=obj.name+" - "+obj.email+" - "+obj.phone;
             //creating li element
             var newEle=document.createElement("li");
@@ -56,7 +56,8 @@
             //adding classname to detect the respective details
             newEle1.className="delete";
             //assigning data-email custom attribute to hold the value of email which acts as key for removing the items while clicking on delete
-            newEle1.setAttribute("data-email",obj.email);
+            //newEle1.setAttribute("data-email",obj.email);
+            newEle1.setAttribute("data-id",obj._id);
             newEle1.appendChild(document.createTextNode("delete"));
             newEle.appendChild(newEle1);
             //creating edit button
@@ -93,11 +94,13 @@
         function deleteItems(e){
             e.preventDefault();
             if(e.target.classList.contains("delete")){
-                var key=e.target.dataset.email;
-                localStorage.removeItem(key);
+                var key=e.target.dataset.id;
+                console.log(key);
+                //localStorage.removeItem(key);
+                axios.delete("https://crudcrud.com/api/ce73d61d8d1b4d629468e52f62297094/user_details/"+key);
                 e.target.parentElement.remove();
             }else if(e.target.classList.contains("edit")){
-                var key=e.target.previousElementSibling.dataset.email;
+                var key=e.target.previousElementSibling.dataset.id;
                 var obj=JSON.parse(localStorage.getItem(key));
                 document.getElementById("name").value=obj.name;
                 document.getElementById("email").value=obj.email;
