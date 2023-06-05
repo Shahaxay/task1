@@ -17,7 +17,10 @@
         <input type="submit" value="submit"><br>
         <ul id="dest"></ul>
     </form>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.4.0/axios.min.js"></script>
     <script>
+        var d=axios.get("https://crudcrud.com/api/d95f09d3da94401d89bde493c042dcb7/user_details");
+        d.then(res=>{console.log(res)});
         var form=document.getElementById("detail");
         form.addEventListener("submit",store);
         var dest=document.getElementById("dest");
@@ -29,6 +32,11 @@
                 email:document.getElementById("email").value,
                 phone:document.getElementById("phone").value
             };
+            //storing in crudcrud cloud
+            axios.post("https://crudcrud.com/api/d95f09d3da94401d89bde493c042dcb7/user_details",user)
+            .then(res=>console.log(res))
+            .catch(err=>console.log(err));
+            //storing in localstorage
             localStorage.setItem(user.email,JSON.stringify(user));
             var obj=JSON.parse(localStorage.getItem(user.email));
             //forming text to show in output
