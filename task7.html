@@ -36,13 +36,13 @@
             //})
 
             //fetching data from crudcrud server
-            //axios.get("https://crudcrud.com/api/ce73d61d8d1b4d629468e52f62297094/user_details")
-            //.then((res)=>{
-            //    res.data.forEach((obj)=>{
-            //        display(obj);
-            //    })
-            //})
-            //.catch((err)=>console.log(err));
+            axios.get("https://crudcrud.com/api/ce73d61d8d1b4d629468e52f62297094/user_details")
+            .then((res)=>{
+                res.data.forEach((obj)=>{
+                    display(obj);
+                })
+            })
+            .catch((err)=>console.log(err));
         });
         function display(obj){
             //forming text to show in output
@@ -101,12 +101,20 @@
                 e.target.parentElement.remove();
             }else if(e.target.classList.contains("edit")){
                 var key=e.target.previousElementSibling.dataset.id;
-                var obj=JSON.parse(localStorage.getItem(key));
-                document.getElementById("name").value=obj.name;
-                document.getElementById("email").value=obj.email;
-                document.getElementById("phone").value=obj.phone;
-                localStorage.removeItem(key);
-                e.target.parentElement.remove();
+                //var obj=JSON.parse(localStorage.getItem(key));
+                //get req
+                axios.get("https://crudcrud.com/api/ce73d61d8d1b4d629468e52f62297094/user_details/"+key)
+                .then(res=>{
+                    document.getElementById("name").value=res.data.name;
+                    document.getElementById("email").value=res.data.email;
+                    document.getElementById("phone").value=res.data.phone;
+                    //delete req
+                    axios.delete("https://crudcrud.com/api/ce73d61d8d1b4d629468e52f62297094/user_details/"+key)
+                    .then(res=>{console.log("deleted")})
+                    .catch(err=>console.log(err));
+                    e.target.parentElement.remove()
+                })
+                //localStorage.removeItem(key);
             }
         }
         
