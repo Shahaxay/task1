@@ -28,11 +28,21 @@
 
         //displaying the appointment list stored from localstorage
         window.addEventListener("DOMContentLoaded",()=>{
-            Object.keys(localStorage).forEach((key)=>{
-                const obj=localStorage.getItem(key);
-                console.log(obj);
-                display(JSON.parse(obj));
+            //fetching list from localstorage
+            //Object.keys(localStorage).forEach((key)=>{
+            //    const obj=localStorage.getItem(key);
+            //    console.log(obj);
+            //    display(JSON.parse(obj));
+            //})
+
+            //fetching data from crudcrud server
+            axios.get("https://crudcrud.com/api/ce73d61d8d1b4d629468e52f62297094/user_details")
+            .then((res)=>{
+                res.data.forEach((obj)=>{
+                    display(obj);
+                })
             })
+            .catch((err)=>console.log(err));
         });
         function display(obj){
             //forming text to show in output
@@ -65,19 +75,19 @@
                 phone:document.getElementById("phone").value
             };
             //storing in crudcrud cloud
-            //axios.post("https://crudcrud.com/api/ce73d61d8d1b4d629468e52f62297094/user_details",user)
-            //.then(res=>{
-            //    console.log(res);
-            //    display(res.data);
-            //})
-            //.catch(err=>{
-            //    console.log(err);
-            //    document.body.innerHTML=document.body.innerHTML+"<h4>something went wrong</h4>";
-            //});
+            axios.post("https://crudcrud.com/api/ce73d61d8d1b4d629468e52f62297094/user_details",user)
+            .then(res=>{
+                console.log(res);
+                display(res.data);
+            })
+            .catch(err=>{
+                console.log(err);
+                document.body.innerHTML=document.body.innerHTML+"<h4>something went wrong</h4>";
+            });
             //storing in localstorage
-            localStorage.setItem(user.email,JSON.stringify(user));
-            var obj=JSON.parse(localStorage.getItem(user.email));
-            display(obj);
+            //localStorage.setItem(user.email,JSON.stringify(user));
+            //var obj=JSON.parse(localStorage.getItem(user.email));
+            //display(obj);
         }
         //deleting items from local storage as well as from destination
         function deleteItems(e){
